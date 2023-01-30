@@ -9,7 +9,7 @@ bootstrap:
     # not as strings in quotes "yes" or 'yes'
 
     # default and recommended is: false
-    #   in CDF 2022 support for this special-groups is not necessary anymore
+      #   in CDF 2022 support for this special-groups is not necessary anymore
     #   check 'bootstrap-cli deploy --help' for more info
         with-special-groups: false
 
@@ -55,30 +55,53 @@ bootstrap:
     # Mapping between IDP (Azure Active Directory) groups and CDF groups.
     idp-cdf-mappings:
     # Support multiple CDF Projects, like dev/test/prod in one config.
-        - cdf-project: <CDF project name> # i.e. bootcamp-01-test
+        - cdf-project: cdf-bootcamp-25-test # i.e. bootcamp-01-test
           mappings:
               - cdf-group: cdf:root
-                idp-source-id: <AAD Group Object id>
-                idp-source-name: <AAD Group name>
+                idp-source-id: dc18623d-3497-46b1-ad5e-a3807a28f20d
+                idp-source-name: bootcamp-25-test-admin
               - cdf-group: cdf:all:owner
-                idp-source-id: <AAD Group Object Id> # for the AAD Group to be matched to cdf-group
-                idp-source-name: <AAD Group name> # i.e. bootcamp-01-test-all-owner
+                idp-source-id: 0aa254f7-b22a-4de6-bf54-dcf27933ce6a # for the AAD Group to be matched to cdf-group
+                idp-source-name: bootcamp-25-test-all-owner # i.e. bootcamp-01-test-all-owner
               - cdf-group: cdf:all:read
-                idp-source-id: <AAD Group Object Id> # for the AAD Group to be matched to cdf-group
-                idp-source-name: <AAD Group name> # i.e. bootcamp-01-test-all-read
+                idp-source-id: 9e3af437-44b9-4898-8b0f-47202aa8071d # for the AAD Group to be matched to cdf-group
+                idp-source-name: bootcamp-25-test-all-read # i.e. bootcamp-01-test-all-read
+
+        - cdf-project: cdf-bootcamp-25-prod # i.e. bootcamp-01-test
+          mappings:
+              - cdf-group: cdf:root
+                idp-source-id: 930bf0dc-f836-4cd4-8f6a-c130851a00d9
+                idp-source-name: bootcamp-25-prod-admin
+              - cdf-group: cdf:all:owner
+                idp-source-id: e95568ba-249c-4e42-b9e2-71fd55429fe9 # for the AAD Group to be matched to cdf-group
+                idp-source-name: bootcamp-25-prod-all-owner # i.e. bootcamp-01-test-all-owner
+              - cdf-group: cdf:all:read
+                idp-source-id: f8ada83b-e87b-4247-9602-b8efb8908d7a # for the AAD Group to be matched to cdf-group
+                idp-source-name: bootcamp-25-prod-all-read # i.e. bootcamp-01-test-all-read
 
 
     namespaces:
-        # Typical config will have a namespace for data sources ("src") and a namespace for use cases ("uc")
-        - ns-name: <Namespace name>
-          description: Data sources for the Ice Cream Factory # HINT
-
-          # Node names will normally follow src:001:srcname or uc:001:usecasename naming convention
+        # Typical config will have separate namespace by data source ("src") and use cases ("uc")
+        - ns-name: src
+          description: Sources used for data extraction
+          # Description names will normally follow src:001:srcname or uc:001:usecasename naming convention
           ns-nodes:
-              - node-name: <Node name>
-                description: Data from SAP # HINT
-        # HINT: Add another namespace below
+              - node-name: src:001:sap
+                description: Source 01 data from SAP
+              - node-name: src:002:opcua
+                description: Source 02 data from opcua
+        # Typical config will have separate namespace by data source ("src") and use cases ("uc")
+        - ns-name: uc
+          description: Use cases representing the data/products
 
+          # Description names will normally follow src:001:srcname or uc:001:usecasename naming convention
+          ns-nodes:
+              - node-name: uc:001:oee
+                description: Use case 001 Over all Equipment effectiveness
+                shared-access:
+                    read:
+                        - node-name: src:001:sap
+                        - node-name: src:002:opcua
 
 # de-facto standards for CDF CogniteClient and logger configuration.
 # Following the same parameter structure as the 'Cognite Python Extractor-Utilities'
