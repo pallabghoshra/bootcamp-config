@@ -17,7 +17,7 @@ shared: true
 action: update
 schedule:
     interval: 5 12 * * *
-    isPaused: false
+    isPaused: true
 dataSetExternalId: uc:001:oee:ds
 authentication:
     clientId: 0c383050-f613-4ad5-ba93-54692a4e241f
