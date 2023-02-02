@@ -32,8 +32,8 @@ schedule:
     isPaused: true
 dataSetExternalId: src:001:sap:ds
 authentication:
-    clientId: 0c383050-f613-4ad5-ba93-54692a4e241f
-    clientSecret: bS28Q~fA28w3uYr59Z8DsKtP.hUramSXw3TuQcHm
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
     tokenUrl: https://login.microsoftonline.com/16e3985b-ebe8-4e24-9da4-933e21a9fc81/oauth2/v2.0/token
   # Optional: If idP requires providing the scopes
     cdfProjectName: cdf-bootcamp-25-test
