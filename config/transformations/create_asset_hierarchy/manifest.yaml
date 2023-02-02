@@ -1,0 +1,73 @@
+---
+# Manifest file downloaded from fusion
+externalId: tr-create_asset_hierarchy
+name: create_asset_hierarchy
+query:
+    file: transformation.sql
+#query: >
+#  SELECT
+#    external_id AS externalId,
+#    IF(
+#      parent_external_id = ''
+#      OR parent_external_id IS NULL,
+#      '',
+#      parent_external_id
+#    ) AS parentExternalId,
+#    name AS name,
+#    json_tuple(metadata,'site','type', 'cycle time', 'Function', 'src', 'Machine type') AS (site, type, cycle_time, function, src, machine_type),
+#    to_metadata(site,type, cycle_time, function, src, machine_type) AS metadata,
+#    description AS description,
+#    'from RAW' AS source,
+#    Dataset_id('src:001:sap:ds') AS dataSetId
+#  FROM
+#    `src:001:sap:db`.assets
+destination:
+    type: asset_hierarchy
+ignoreNullFields: true
+shared: true
+action: upsert
+schedule:
+    interval: 54 11 * * *
+    isPaused: true
+dataSetExternalId: src:001:sap:ds
+authentication:
+    clientId: 0c383050-f613-4ad5-ba93-54692a4e241f
+    clientSecret: bS28Q~fA28w3uYr59Z8DsKtP.hUramSXw3TuQcHm
+    tokenUrl: https://login.microsoftonline.com/16e3985b-ebe8-4e24-9da4-933e21a9fc81/oauth2/v2.0/token
+  # Optional: If idP requires providing the scopes
+    cdfProjectName: cdf-bootcamp-25-test
+    scopes:
+        - https://westeurope-1.cognitedata.com/.default
+# Specify credentials separately like this:
+# authentication:
+#   read:
+#     clientId: ${READ_CLIENT_ID}
+#     clientSecret: ${READ_CLIENT_SECRET}
+#     tokenUrl: ${READ_TOKEN_URL}
+#     cdfProjectName: ${READ_CDF_PROJECT_NAME}
+#     # Optional: If idP requires providing the scopes
+#     scopes:
+#       - ${READ_SCOPES}
+#     # Optional: If idP requires providing the audience
+#     audience: ${READ_CDF_AUDIENCE}
+#   write:
+#     clientId: ${WRITE_CLIENT_ID}
+#     clientSecret: ${WRITE_CLIENT_SECRET}
+#     tokenUrl: ${WRITE_TOKEN_URL}
+#     cdfProjectName: ${WRITE_CDF_PROJECT_NAME}
+#     # Optional: If idP requires providing the scopes
+#     scopes:
+#       - ${WRITE_SCOPES}
+#     # Optional: If idP requires providing the audience
+#     audience: ${WRITE_CDF_AUDIENCE}
+# Or together like this:
+# authentication:
+#   clientId: ${CLIENT_ID}
+#   clientSecret: ${CLIENT_SECRET}
+#   tokenUrl: ${TOKEN_URL}
+#   # Optional: If idP requires providing the scopes
+#   cdfProjectName: ${CDF_PROJECT_NAME}
+#   scopes:
+#    - ${SCOPES}
+#   # Optional: If idP requires providing the audience
+#   audience: ${AUDIENCE}
